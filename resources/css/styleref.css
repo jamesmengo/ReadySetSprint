@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+body {
+  background: #edf0f1;
+  padding: 80px 0 0 0;
+}
+
+body,
+input,
+button,
+p{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+
+}
+
+header {
+  width: 100%;
+  height: 80px;
+
+  position: fixed;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  z-index: 5;
+
+  background: #25b99a;
+  box-shadow: 0px 2px 4px rgba(44, 62, 80, 0.15);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  text-align: center;
+}
+
+header input {
+  width: 100%;
+  height: 60px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 0 60px 0 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px 25px 25px 5px;
+  border: 0px;
+  box-shadow: none;
+  outline: none;
+
+  text-align: center;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+header input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+header button {
+  width: 60px;
+  height: 60px;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+
+  border-radius: 50%;
+  background: #fff;
+  border: 0px;
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+header button svg {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+}
+
+header button svg .fill {
+  fill: #25b99a;
+}
+
+.container {
+  width: 100%;
+  padding: 15px;
+  float: left;
+  min-height: 150px;
+}
+
+ul.todo li {
+  width: 100%;
+  min-height: 50px;
+  float: left;
+  background: #fff;
+  padding: 14px 100px 14px 14px;
+  margin: 0 0 10px 0;
+  border-radius: 5px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #444;
+}
+
+ul.todo li:last-of-type {
+  margin: 0;
+}
+
+ul.todo li .buttons {
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+ul.todo li .buttons button {
+  width: 50px;
+  height: 50px;
+  float: left;
+  background: none;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: none;
+
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+ul.todo li .buttons button:not(:first-child):before {
+  content: '';
+  width: 1px;
+  height: 30px;
+  background: #25b99a;
+
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+
+
+ul.todo li .buttons button svg {
+  width: 22px;
+  height: 22px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin: -11px 0 0 -11px;
+}
+
+ul.todo#completed li .buttons button.complete svg {
+  background: #25b99a;
+  transition: background 0.2s ease;
+}
+
+ul.todo#current li .buttons button.complete:hover svg {
+  background: rgba(37, 185, 154, 0.5);
+
+}
+
+ul.todo#completed li .buttons button.complete svg .fill {
+  fill: white;
+
+}
+
+ul.todo#current li .buttons button.complete:hover svg .fill {
+  fill: #fff;
+
+}
+
+
+ul.todo li .buttons button.complete svg {
+  border-radius: 11px;
+  border: 1.5px solid #25b99a;
+}
+
+ul.todo li .buttons button svg .fill {
+  transition: fill 0.2s ease;
+}
+
+ul.todo li .buttons button.remove svg .fill {
+  fill: #c0cecb;
+}
+
+ul.todo li .buttons button.remove:hover svg .fill {
+  fill: #e85656;
+}
+
+
+.nofill {
+  fill: none;
+}
+
+ul.todo li .buttons button.complete svg .fill {
+  fill: #25b99a;
+}
+
+ul.todo li .buttons button:active.complete svg .nofill {
+  fill: #25b99a;
+}
+
+ul.todo li .buttons button:active.complete svg .fill {
+  fill: #fff;
+}
+
+
+ul.todo#completed:not(:empty) {
+  padding: 60px 0 0 0;
+  position: relative;
+  ;
+}
+
+ul.todo {
+  text-align: center;
+}
+
+hr.divider {
+  width: 50%;
+  height: 2px;
+  position: relative;
+  left: 25%;
+  background-image: linear-gradient(to right, rgba(37, 185, 154, 0.25), rgba(37, 185, 154, 1), rgba(37, 185, 154, 0.25));
+}
+
+div.sectiontitle {
+  padding-left: 20px;
+}
+
+ul.todo#current:empty:after {
+  content: "You've completed all your tasks";
+  width: 30%;
+  min-width: 300px;
+  text-align: center;
+  position: absolute;
+  left: 35%;
+  margin-top: 50px;
+  color: rgba(37, 185, 154, 0.5);
+}
+
+ul.todo#completed:empty:after {
+  content: "Let's get something done";
+  width: 30%;
+  min-width: 300px;
+  text-align: center;
+  position: relative;
+  color: rgba(37, 185, 154, 0.5);
+}

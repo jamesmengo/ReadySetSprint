@@ -1,0 +1,189 @@
+@charset "UTF-8";
+
+body{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    min-width: 700px;
+    background: #edf0f1;
+}
+
+header {
+    width: 100%;
+    height: 80px;
+    background: rgb(22,61,79);
+    position: fixed;
+    box-shadow: 0px 2px 4px rgba(44, 62, 80, 0.15);
+    text-align: center;
+
+}
+
+
+header .logo{
+    height: 80px;
+    width: 25%;
+    max-width: 250px;
+    float: left;
+}
+
+header input{
+    height: 60px;
+    width: 65%;
+    margin-top: 10px;
+    text-indent: 30px;
+
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px 30px 30px 6px;
+
+    font-size: 100%;
+
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+    
+    color: #fff;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+header input::-webkit-input-placeholder{
+    color: rgba(255, 255, 255, 0.75);
+}
+
+header button {
+    height: 60px;
+    width: 60px;
+
+    margin-top: 10px;
+    position: absolute;
+    margin-left: -60px;
+
+    border-radius: 50%;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    background: rgb(66,146,84);
+}
+
+header button svg {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+}
+
+header button svg .fill {
+    fill: rgb(22,61,97);
+}
+
+div.container {
+    min-height: 300px;
+    width: 90%;
+    position: relative;
+    top: 100px;
+    left: 5%;
+}
+
+div.container .paneltab {
+    height: 50px;
+}
+
+div.container .itemview {
+    min-height: 350px;
+    width: 100%;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+div.container .label {
+    height: 10px;
+    width: 90%;
+    min-width: 200px;
+    margin-bottom: 15px;
+    margin-left: 5%;
+
+}
+
+div.container .label h3:first-of-type {
+    width: 50%;
+    min-width: 100px;
+    font-weight: 300;
+    text-indent: 20px;
+    float: left
+}
+
+div.container .label h3 {
+    width: 10%;
+    min-width: 100px;
+    font-weight: 300;
+    text-indent: 20px;
+    float: left
+}
+
+
+button.sectionbutton {
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    
+    text-align: centre;
+    float: left;
+
+    outline: none;
+    border-radius: 3px;
+
+    font-size: 22px;
+    font-weight: 300;
+}
+
+button.sectionbutton.active {
+    background-color: #edf0f1;
+}
+
+button.sectionbutton:active {
+    background-color: #edf0f1;
+}
+
+ul.itemlist .item {
+    width: 90%;
+    height: 50px;
+
+    margin-bottom: 10px;
+    margin-left: 5%;
+    background: #edf0f1;
+
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 20px;
+    text-indent: 20px;
+    
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+ul.itemlist .item  p:first-of-type{
+    width: 50%;
+    float: left;
+}
+
+ul.itemlist .item  p {
+    min-width: 100px;
+    width: 10%;
+    float: left;
+}
+
+ul.itemlist .item div.buttons {
+    width: 15%;
+    height: 50px;
+    margin-top: -15px;
+    float: right;
+    background-color: black;
+}
+
