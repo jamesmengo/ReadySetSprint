@@ -14,7 +14,6 @@ header {
     position: fixed;
     box-shadow: 0px 2px 4px rgba(44, 62, 80, 0.15);
     text-align: center;
-
 }
 
 
@@ -27,12 +26,13 @@ header .logo{
 
 header input{
     height: 60px;
-    width: 65%;
+    width: 20%;
     margin-top: 10px;
+    margin-right: 10px;
     text-indent: 30px;
 
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 6px 30px 30px 6px;
+    border-radius: 5px;
 
     font-size: 100%;
 
@@ -41,10 +41,16 @@ header input{
     outline: none;
     
     color: #fff;
+    float: left;
 
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+
+header input:first-of-type{
+    margin-left: 25px;
+}
+
 
 header input::-webkit-input-placeholder{
     color: rgba(255, 255, 255, 0.75);
@@ -56,14 +62,18 @@ header button {
 
     margin-top: 10px;
     position: absolute;
-    margin-left: -60px;
+    margin-left: -30px;
 
     border-radius: 50%;
     border: 0;
     box-shadow: none;
     outline: none;
     cursor: pointer;
-    background: rgb(66,146,84);
+    background: rgb(56,178,48);
+}
+
+header button:active {
+    background: rgb(39, 122, 33);
 }
 
 header button svg {
@@ -77,6 +87,10 @@ header button svg {
 
 header button svg .fill {
     fill: rgb(22,61,97);
+}
+
+header button:hover svg .fill {
+    fill: #fff;
 }
 
 div.container {
@@ -181,9 +195,88 @@ ul.itemlist .item  p {
 
 ul.itemlist .item div.buttons {
     width: 15%;
+    min-width: 150px;
     height: 50px;
     margin-top: -15px;
     float: right;
-    background-color: black;
+}
+
+ul.itemlist li .buttons button {
+width: 50px;
+height: 50px;
+float: left;
+background: none;
+border: 0px;
+outline: none;
+cursor: pointer;
+position: relative;
+box-shadow: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+}
+
+ul.itemlist li .buttons button:not(:first-child):before {
+content: '';
+width: 1px;
+height: 30px;
+background: #25b99a;
+position: absolute;
+top: 10px;
+left: 0;
+}
+
+
+ul.itemlist li .buttons button svg {
+width: 22px;
+height: 22px;
+
+position: absolute;
+top: 50%;
+left: 50%;
+
+margin: -11px 0 0 -11px;
+}
+
+ul.itemlist li .buttons button.complete svg {
+border-radius: 11px;
+border: 1.5px solid #25b99a;
+}
+
+ul.itemlist li .buttons button svg .fill {
+transition: fill 0.2s ease;
+}
+
+ul.itemlist li .buttons button.remove svg .fill {
+fill: #c0cecb;
+}
+
+ul.itemlist li .buttons button.remove:hover svg .fill {
+fill: #e85656;
+}
+
+ul.itemlist li .buttons button.edit svg .fill {
+    fill: #25b99a;
+}
+
+
+ul.itemlist li .buttons button.remove:active svg .nofill {
+fill: #e85656;
+}
+
+.nofill {
+fill: none;
+}
+
+ul.itemlist li .buttons button svg .fill {
+fill: #25b99a;
+}
+
+
+ul.itemlist li .buttons button:active svg .nofill {
+fill: #25b99a;
+}
+
+ul.itemlist li .buttons button:active svg .fill {
+fill: #fff;
 }
 
