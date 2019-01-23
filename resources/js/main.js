@@ -92,7 +92,7 @@ function createLogItem(name, priority, time, logID) {
     completebutton.classList.add('complete');
     completebutton.innerHTML = completeSVG;
 
-    editbutton.addEventListener('click',editItem);
+    editbutton.addEventListener('click',editItemProduct, true);
     if(logID == 1){
         removebutton.addEventListener('click',removeItemProduct);
     } else if (logID == 2){
@@ -135,35 +135,268 @@ function resetinputs(){
     inputtime.value = '';
 }
 
-function editItem() {
+function editItemProduct() {
     var item = this.parentNode.parentNode;
-    var oldtext = item.childNodes[1].innerText;
-    var oldpriority = item.childNodes[3].innerText;
-    var oldtime = item.childNodes[5].innerText;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.innerText;
+    var priorityval = priority.innerText;
+    var timeval = time.innerText;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+    // console.log(textval);
+    // console.log(priorityval);
+    // console.log(timeval);
+    var inputtext = document.createElement('input');
+    var inputpriority = document.createElement('input');
+    var inputtime = document.createElement('input');
+    
+    inputtext.type = "text";
+    inputtext.value = textval;
+
+    inputpriority.type = "number";
+    inputpriority.min = 1;
+    inputpriority.max = 3;
+    inputpriority.value = priorityval;
+
+    inputtime.type = "number";
+    inputtime.min = 0;
+    inputtime.value = timeval;
+
+    //add event listener for 'enter'
+    
+    
+    item.insertBefore(inputtime,item.childNodes[0]);
+    item.insertBefore(inputpriority,item.childNodes[0]);
+    item.insertBefore(inputtext,item.childNodes[0]);
+
+    database.productlog.splice(textval,3);
+
+    this.removeEventListener('click',editItemProduct,true);
+    this.addEventListener('click',setItemProduct,true);
+    
     backlogdataUpdated();
     // TODO: finish editing functionality
+}
+function editItemSprint() {
+    var item = this.parentNode.parentNode;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.innerText;
+    var priorityval = priority.innerText;
+    var timeval = time.innerText;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+    var inputtext = document.createElement('input');
+    var inputpriority = document.createElement('input');
+    var inputtime = document.createElement('input');
+    
+    inputtext.type = "text";
+    inputtext.value = textval;
+
+    inputpriority.type = "number";
+    inputpriority.min = 1;
+    inputpriority.max = 3;
+    inputpriority.value = priorityval;
+
+    inputtime.type = "number";
+    inputtime.min = 0;
+    inputtime.value = timeval;
+
+    
+    
+    item.insertBefore(inputtime,item.childNodes[0]);
+    item.insertBefore(inputpriority,item.childNodes[0]);
+    item.insertBefore(inputtext,item.childNodes[0]);
+
+    database.sprintlog.splice(textval,3);
+
+    this.removeEventListener('click',editItemSprint,true);
+    this.addEventListener('click',setItemSprint,true);
+    
+    backlogdataUpdated();
+    // TODO: finish editing functionality
+}
+function editItemComplete() {
+    var item = this.parentNode.parentNode;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.innerText;
+    var priorityval = priority.innerText;
+    var timeval = time.innerText;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+    // console.log(textval);
+    // console.log(priorityval);
+    // console.log(timeval);
+    var inputtext = document.createElement('input');
+    var inputpriority = document.createElement('input');
+    var inputtime = document.createElement('input');
+    
+    inputtext.type = "text";
+    inputtext.value = textval;
+
+    inputpriority.type = "number";
+    inputpriority.min = 1;
+    inputpriority.max = 3;
+    inputpriority.value = priorityval;
+
+    inputtime.type = "number";
+    inputtime.min = 0;
+    inputtime.value = timeval;
+
+    //add event listener for 'enter'
+    
+    
+    item.insertBefore(inputtime,item.childNodes[0]);
+    item.insertBefore(inputpriority,item.childNodes[0]);
+    item.insertBefore(inputtext,item.childNodes[0]);
+
+    database.completed.splice(textval,3);
+
+    this.removeEventListener('click',editItemComplete,true);
+    this.addEventListener('click',editItemComplete,true);
+    
+    backlogdataUpdated();
+    // TODO: finish editing functionality
+}
+
+function setItemProduct() {
+    var item = this.parentNode.parentNode;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.value;
+    var priorityval = priority.value;
+    var timeval = time.value;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+
+    var ptext = document.createElement('p');
+    var ppriority = document.createElement('p');
+    var ptime = document.createElement('p');
+
+    ptext.innerHTML = textval;
+    ppriority.innerHTML = priorityval;
+    ptime.innerHTML = timeval;
+
+    item.insertBefore(ptime,item.childNodes[0]);
+    item.insertBefore(ppriority,item.childNodes[0]);
+    item.insertBefore(ptext,item.childNodes[0]);
+
+    this.removeEventListener('click',setItemProduct,true);
+    this.addEventListener('click',editItemProduct,true);
+
+    
+    database.productlog.push(textval);
+    database.productlog.push(priorityval);
+    database.productlog.push(timeval);
+
+    backlogdataUpdated();
+}
+
+function setItemSprint() {
+    var item = this.parentNode.parentNode;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.value;
+    var priorityval = priority.value;
+    var timeval = time.value;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+
+    var ptext = document.createElement('p');
+    var ppriority = document.createElement('p');
+    var ptime = document.createElement('p');
+
+    ptext.innerHTML = textval;
+    ppriority.innerHTML = priorityval;
+    ptime.innerHTML = timeval;
+
+    item.insertBefore(ptime,item.childNodes[0]);
+    item.insertBefore(ppriority,item.childNodes[0]);
+    item.insertBefore(ptext,item.childNodes[0]);
+
+    this.removeEventListener('click',setItemSprint,true);
+    this.addEventListener('click',editItemSprint,true);
+
+    
+    database.sprintlog.push(textval);
+    database.sprintlog.push(priorityval);
+    database.sprintlog.push(timeval);
+
+    backlogdataUpdated();
+
+}
+
+function setItemComplete() {
+    var item = this.parentNode.parentNode;
+    var text = item.childNodes[0];
+    var priority = item.childNodes[1];
+    var time = item.childNodes[2];
+    var textval = text.value;
+    var priorityval = priority.value;
+    var timeval = time.value;
+    item.removeChild(text);
+    item.removeChild(priority);
+    item.removeChild(time);
+
+    var ptext = document.createElement('p');
+    var ppriority = document.createElement('p');
+    var ptime = document.createElement('p');
+
+    ptext.innerHTML = textval;
+    ppriority.innerHTML = priorityval;
+    ptime.innerHTML = timeval;
+
+    item.insertBefore(ptime,item.childNodes[0]);
+    item.insertBefore(ppriority,item.childNodes[0]);
+    item.insertBefore(ptext,item.childNodes[0]);
+
+    this.removeEventListener('click',setItemProduct,true);
+    this.addEventListener('click',editItem,true);
+
+    
+    database.completed.push(textval);
+    database.completed.push(priorityval);
+    database.completed.push(timeval);
+
+    backlogdataUpdated();
+
 }
 
 
 // duplication
 function removeItemProduct() {
     var item = this.parentNode.parentNode;
+    console.log(item);
     backlog.removeChild(item);
-    database.productlog.splice(item,3);
+    database.productlog.splice(item.childNodes[0].innerHTML,3);
     backlogdataUpdated();
 }
 
 function removeItemSprint(){
+    
     var item = this.parentNode.parentNode;
+    
     backlog.removeChild(item);
-    database.sprintlog.splice(item,3);
+    database.sprintlog.splice(item.childNodes[0].innerHTML,3);
     backlogdataUpdated();
 }
 
 function removeItemCompleted() {
     var item = this.parentNode.parentNode;
     backlog.removeChild(item);
-    database.completed.splice(item,3);
+    database.completed.splice(item.childNodes[0].innerHTML,3);
     backlogdataUpdated();
 }
 
@@ -175,11 +408,16 @@ function movetoSprint() {
     var priority = item.childNodes[1].innerText;
     var time = item.childNodes[2].innerText;
     backlog.removeChild(item);
-    database.productlog.splice(item,3);
+    database.productlog.splice(text,3);
     database.sprintlog.push(text);
     database.sprintlog.push(priority);
     database.sprintlog.push(time);
     this.removeEventListener('click',movetoSprint,true)
+    console.log(this.parentNode);
+    var edit = this.parentNode.childNodes[0];
+    edit.removeEventListener('click',editItemProduct,true);
+    edit.addEventListener('click',editItemSprint, true);
+    console.log(edit);
     backlogdataUpdated();
 }
 
@@ -194,6 +432,9 @@ function movetoCompleted() {
     database.completed.push(priority);
     database.completed.push(time);
     this.removeEventListener('click',movetoCompleted,true)
+    var edit = this.parentNode.childNodes[0];
+    edit.removeEventListener('click',editItemSprint,true);
+    edit.addEventListener('click',editItemComplete, true);
     backlogdataUpdated();
 }
 
@@ -203,11 +444,14 @@ function movetoProduct() {
         var priority = item.childNodes[1].innerText;
         var time = item.childNodes[2].innerText;
         backlog.removeChild(item);
-        database.completed.splice(item,3);
+        database.completed.splice(text,3);
         database.productlog.push(text);
         database.productlog.push(priority);
         database.productlog.push(time);
         this.removeEventListener('click',movetoCompleted,true)
+        var edit = this.parentNode.childNodes[0];
+        edit.removeEventListener('click',editItemComplete,true);
+        edit.addEventListener('click',editItemProduct, true);
         backlogdataUpdated();
 }
 

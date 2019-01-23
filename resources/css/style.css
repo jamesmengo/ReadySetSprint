@@ -194,6 +194,28 @@ ul.itemlist .item  p {
     float: left;
 }
 
+ul.itemlist .item  input:first-of-type{
+    width: 50%;
+    float: left;
+}
+
+ul.itemlist .item  input {
+    min-width: 100px;
+    width: 10%;
+    float: left;
+    height: 40px;;
+    margin-left: 10px;
+    margin-top: -10px;
+    line-height: 30px;
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    box-shadow: none;
+    outline: none;
+    text-indent: 10px;
+    font-size: 15px;
+}
+
 ul.itemlist .item div.buttons {
     width: 15%;
     min-width: 150px;
