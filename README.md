@@ -1,10 +1,10 @@
 # ReadySetSprint
-AGILE Sprint Planning Tool
+**AGILE Sprint Planning Tool**
 
-Project Status: Code refactoring + debugging
+***Project Status: Code refactoring + debugging***
 
 
-Known refactoring issues:
+_**Known refactoring issues:**_
 - duplicated code between handling
 - poor design choices due to javascript propogation
 
