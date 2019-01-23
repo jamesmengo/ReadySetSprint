@@ -3,21 +3,17 @@ var removeSVG = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xli
 var completeSVG = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve"><rect y="0" class="nofill" width="22" height="22"></rect><g><path class="fill" d="M9.7,14.4L9.7,14.4c-0.2,0-0.4-0.1-0.5-0.2l-2.7-2.7c-0.3-0.3-0.3-0.8,0-1.1s0.8-0.3,1.1,0l2.1,2.1l4.8-4.8c0.3-0.3,0.8-0.3,1.1,0s0.3,0.8,0,1.1l-5.3,5.3C10.1,14.3,9.9,14.4,9.7,14.4z"></path></g></svg>';
 
 
-// var backlogdata = {
-//     sprintlog: [],
-//     productlog: []
-// };
-
 var database = (localStorage.getItem('database'))? JSON.parse(localStorage.getItem('database')):{
     sprintlog: [],
-    productlog: []
+    productlog: [],
+    completed: []
 };
 
-renderallbacklog();
+renderproductbacklog();
 
 document.getElementById('sprintbutton').addEventListener('click',rendersprintbacklog);
 document.getElementById('productbutton').addEventListener('click',renderproductbacklog);
-document.getElementById('allbutton').addEventListener('click',renderallbacklog);;
+document.getElementById('completedbutton').addEventListener('click',rendercompletedbacklog);;
 
 
 var additembutton = document.getElementById("AddItem");
@@ -53,7 +49,7 @@ function validateInput() {
     if(inputtextval && inputpriorityval && inputtimeval){
         if(inputpriorityval <= 3 && inputpriorityval > 0){
             if(inputtimeval >= 1){
-                createLogItem(inputtextval,inputpriorityval,inputtimeval);
+                createLogItem(inputtextval,inputpriorityval,inputtimeval,1);
                 database.productlog.push(inputtextval);
                 database.productlog.push(inputpriorityval);
                 database.productlog.push(inputtimeval);
@@ -69,7 +65,7 @@ function validateInput() {
     }
 }
 
-function createLogItem(name, priority, time) {
+function createLogItem(name, priority, time, logID) {
     var item = document.createElement('li');
     
     var itemname = document.createElement('p');
@@ -97,8 +93,20 @@ function createLogItem(name, priority, time) {
     completebutton.innerHTML = completeSVG;
 
     editbutton.addEventListener('click',editItem);
-    removebutton.addEventListener('click',removeItem);
-    completebutton.addEventListener('click',completeItem);
+    if(logID == 1){
+        removebutton.addEventListener('click',removeItemProduct);
+    } else if (logID == 2){
+        removebutton.addEventListener('click',removeItemSprint)
+    } else {
+        removebutton.addEventListener('click',removeItemCompleted)
+    }
+    if(logID == 1){
+        completebutton.addEventListener('click',movetoSprint);
+    } else if (logID == 2){
+        completebutton.addEventListener('click',movetoCompleted);
+    } else {
+        completebutton.addEventListener('click',movetoProduct);
+    }
     
     buttons.appendChild(editbutton);
     buttons.appendChild(removebutton);
@@ -118,14 +126,6 @@ function createLogItem(name, priority, time) {
 
 }
 
-var editb = document.getElementById('editb');
-var removeb = document.getElementById('removeb');
-var completeb = document.getElementById('completeb');
-
-editb.addEventListener('click',editItem);
-removeb.addEventListener('click',removeItem);
-completeb.addEventListener('click',completeItem);
-
 function resetinputs(){
     var inputtext = document.getElementById('inputname');
     var inputpriority = document.getElementById('inputpriority');
@@ -144,42 +144,113 @@ function editItem() {
     // TODO: finish editing functionality
 }
 
-function removeItem() {
+
+// duplication
+function removeItemProduct() {
     var item = this.parentNode.parentNode;
     backlog.removeChild(item);
     database.productlog.splice(item,3);
     backlogdataUpdated();
 }
 
-function completeItem(sprint) {
+function removeItemSprint(){
     var item = this.parentNode.parentNode;
     backlog.removeChild(item);
+    database.sprintlog.splice(item,3);
     backlogdataUpdated();
 }
 
-function renderallbacklog() {
-    if(!database.productlog.length && !database.sprintlog.length) {
+function removeItemCompleted() {
+    var item = this.parentNode.parentNode;
+    backlog.removeChild(item);
+    database.completed.splice(item,3);
+    backlogdataUpdated();
+}
+
+
+// todo: fix this code duplication!
+function movetoSprint() {
+    item = this.parentNode.parentNode;
+    var text = item.childNodes[0].innerText;
+    var priority = item.childNodes[1].innerText;
+    var time = item.childNodes[2].innerText;
+    backlog.removeChild(item);
+    database.productlog.splice(item,3);
+    database.sprintlog.push(text);
+    database.sprintlog.push(priority);
+    database.sprintlog.push(time);
+    this.removeEventListener('click',movetoSprint,true)
+    backlogdataUpdated();
+}
+
+function movetoCompleted() {
+    item = this.parentNode.parentNode;
+    var text = item.childNodes[0].innerText;
+    var priority = item.childNodes[1].innerText;
+    var time = item.childNodes[2].innerText;
+    backlog.removeChild(item);
+    database.sprintlog.splice(item,3);
+    database.completed.push(text);
+    database.completed.push(priority);
+    database.completed.push(time);
+    this.removeEventListener('click',movetoCompleted,true)
+    backlogdataUpdated();
+}
+
+function movetoProduct() {
+        item = this.parentNode.parentNode;
+        var text = item.childNodes[0].innerText;
+        var priority = item.childNodes[1].innerText;
+        var time = item.childNodes[2].innerText;
+        backlog.removeChild(item);
+        database.completed.splice(item,3);
+        database.productlog.push(text);
+        database.productlog.push(priority);
+        database.productlog.push(time);
+        this.removeEventListener('click',movetoCompleted,true)
+        backlogdataUpdated();
+}
+
+
+function renderproductbacklog() {
+    removeAllLogItems();
+    if(!database.productlog.length) {
         return;
     } else {
         for (var i = 0; i < database.productlog.length; i+=3) {
-            createLogItem(database.productlog[i],database.productlog[i+1],database.productlog[i+2])
-        }
-        for (var i = 0; i < database.sprintlog.length; i++) {
+            createLogItem(database.productlog[i],database.productlog[i+1],database.productlog[i+2],1)
         }
     }
-
-    
 }
 
-function renderproductbacklog() {
-
+function rendercompletedbacklog() {
+        removeAllLogItems();
+        if(!database.completed.length){
+            return;
+        } else {
+            for (var i = 0; i < database.completed.length; i+=3) {
+                createLogItem(database.completed[i],database.completed[i+1],database.completed[i+2],3)
+            }   
+        }
 }
 
 function rendersprintbacklog() {
-
+    removeAllLogItems();
+    if(!database.sprintlog.length){
+        return;
+    } else {
+        for (var i = 0; i < database.sprintlog.length; i+=3) {
+            createLogItem(database.sprintlog[i],database.sprintlog[i+1],database.sprintlog[i+2],2)
+        }
+    }
 }
 
 function backlogdataUpdated() {
     localStorage.setItem('database',JSON.stringify(database));
+}
+
+function removeAllLogItems(){
+    var backlog = document.getElementById('backlog');
+    backlog.innerHTML = '';
 }
 
