@@ -1,23 +1,23 @@
-__# ReadySetSprint__
-**AGILE Sprint Planning Tool**
+# ReadySetSprint
+##AGILE Sprint Planning Tool##
 
 ***Project Status: Code refactoring + debugging***
 
 
-__Known refactoring issues:__
+###Known refactoring issues###
 - duplicated code between handling
 - poor design choices due to javascript propogation
 
-__Known bugs:__
+###Known bugs:###
 - when: when you click edit multipe times and refresh the wrong item is edited in memory
 
-__Areas of extension:__
+###Areas of extension:###
 - node.js (database, server, promises)
 - firebase.js (login authentication)
 - react.js (front-end rehaul)
 - feature multiple projects at the same time
 
-__**TECHNICAL SPECIFICATIONS:**__
+##TECHNICAL SPECIFICATIONS:##
 
 **Sprint Backlog:**
 - As a user I want the list to sort itself my order of priority
@@ -36,7 +36,7 @@ __**TECHNICAL SPECIFICATIONS:**__
 - As a user I want to be able to edit the value of the list elements in case I made a mistake.
 - As a user I want to be able to switch between views of the product backlog and the sprint backlog
 
-__**UI SPECIFICATIONS:**__
+##UI SPECIFICATIONS:##
 
 **Sprint Backlog:**
 
