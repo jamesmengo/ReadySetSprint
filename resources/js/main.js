@@ -66,6 +66,7 @@ function validateInput() {
 }
 
 function createLogItem(name, priority, time, logID) {
+
     var item = document.createElement('li');
     
     var itemname = document.createElement('p');
@@ -100,13 +101,24 @@ function createLogItem(name, priority, time, logID) {
     } else {
         removebutton.addEventListener('click',removeItemCompleted)
     }
-    if(logID == 1){
-        completebutton.addEventListener('click',movetoSprint);
-    } else if (logID == 2){
-        completebutton.addEventListener('click',movetoCompleted);
-    } else {
-        completebutton.addEventListener('click',movetoProduct);
-    }
+
+
+
+
+    completebutton.addEventListener('click', function completehandler(){
+        completeItem(item,logID);
+        completebutton.removeEventListener('click',completehandler,true)
+    }, true);
+
+    
+    // if(logID == 1){
+        // completebutton.addEventListener('click',()=>
+        // completeItem(item,item.childNodes ,'1'));
+    // } else if (logID == 2){
+    //     completebutton.addEventListener('click',movetoCompleted);
+    // } else {
+    //     completebutton.addEventListener('click',movetoProduct);
+    // }
     
     buttons.appendChild(editbutton);
     buttons.appendChild(removebutton);
@@ -232,9 +244,6 @@ function editItemComplete() {
     item.removeChild(text);
     item.removeChild(priority);
     item.removeChild(time);
-    // console.log(textval);
-    // console.log(priorityval);
-    // console.log(timeval);
     var inputtext = document.createElement('input');
     var inputpriority = document.createElement('input');
     var inputtime = document.createElement('input');
@@ -378,7 +387,6 @@ function setItemComplete() {
 // duplication
 function removeItemProduct() {
     var item = this.parentNode.parentNode;
-    console.log(item);
     backlog.removeChild(item);
     database.productlog.splice(item.childNodes[0].innerHTML,3);
     backlogdataUpdated();
@@ -400,6 +408,38 @@ function removeItemCompleted() {
     backlogdataUpdated();
 }
 
+function completeItem(item, flag) {
+    var text = item.children[0].innerText;
+    var priority = item.childNodes[1].innerText;
+    var time = item.childNodes[2].innerText;
+    backlog.removeChild(item)
+
+    if(flag == 1){
+        source = database.productlog;
+        target = database.sprintlog;
+    } else if (flag == 2) {
+        source = database.sprintlog;
+        target = database.completed;
+    } else {
+        source = database.completed;
+        target = database.productlog;
+    }
+
+    source.splice(text,3);
+    target.push(text);
+    target.push(priority);
+    target.push(time);
+
+    backlogdataUpdated();
+    
+    // console.log(this.parentNode);
+    // var edit = this.parentNode.childNodes[0];
+    // edit.removeEventListener('click',editItemProduct,true);
+    // edit.addEventListener('click',editItemSprint, true);
+    // console.log(edit);
+    // backlogdataUpdated();
+}
+
 
 // todo: fix this code duplication!
 function movetoSprint() {
@@ -413,11 +453,9 @@ function movetoSprint() {
     database.sprintlog.push(priority);
     database.sprintlog.push(time);
     this.removeEventListener('click',movetoSprint,true)
-    console.log(this.parentNode);
     var edit = this.parentNode.childNodes[0];
     edit.removeEventListener('click',editItemProduct,true);
     edit.addEventListener('click',editItemSprint, true);
-    console.log(edit);
     backlogdataUpdated();
 }
 
